@@ -165,6 +165,13 @@
             --radius-md: 16px;
             --radius-lg: 24px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Colores de redes sociales */
+            --facebook: #1877F2;
+            --instagram: #E4405F;
+            --tiktok: #000000;
+            --whatsapp: #25D366;
+            --google: #DB4437;
         }
 
         * {
@@ -308,6 +315,17 @@
             background: transparent;
             color: var(--white);
             border: 2px solid var(--white);
+        }
+        
+        .btn-google {
+            background: var(--white);
+            color: var(--google);
+            border: 2px solid var(--google);
+        }
+        
+        .btn-google:hover {
+            background: var(--google);
+            color: var(--white);
         }
 
         /* ========================= */
@@ -999,7 +1017,7 @@
         }
 
         /* ========================= */
-        /* REDES SOCIALES */
+        /* REDES SOCIALES - MEJORADAS */
         /* ========================= */
         .social-links {
             display: flex;
@@ -1022,22 +1040,52 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--gray);
+            background: var(--gray-light);
             text-decoration: none;
             transition: var(--transition);
             font-size: 1.2rem;
             box-shadow: var(--shadow-sm);
         }
 
-        .social-link.facebook { background: #1877F2; }
-        .social-link.instagram { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4); }
-        .social-link.tiktok { background: #000000; position: relative; }
-        .social-link.whatsapp { background: #25D366; }
-        .social-link.youtube { background: #FF0000; }
-        .social-link.twitter { background: #1DA1F2; }
+        /* Colores al hover/select */
+        .social-link:hover,
+        .social-link:focus,
+        .social-link.selected {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .social-link.facebook:hover,
+        .social-link.facebook:focus,
+        .social-link.facebook.selected {
+            background: var(--facebook);
+            color: white;
+        }
+
+        .social-link.instagram:hover,
+        .social-link.instagram:focus,
+        .social-link.instagram.selected {
+            background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+            color: white;
+        }
+
+        .social-link.tiktok:hover,
+        .social-link.tiktok:focus,
+        .social-link.tiktok.selected {
+            background: var(--tiktok);
+            color: white;
+        }
+
+        .social-link.whatsapp:hover,
+        .social-link.whatsapp:focus,
+        .social-link.whatsapp.selected {
+            background: var(--whatsapp);
+            color: white;
+        }
 
         /* ========================= */
-        /* FOOTER CORREGIDO */
+        /* FOOTER MEJORADO */
         /* ========================= */
         footer {
             background: var(--dark);
@@ -1183,6 +1231,36 @@
 
         .footer-contact a:hover {
             color: var(--white);
+        }
+
+        /* Botón de Google en Footer */
+        .google-review-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            border: 2px solid var(--google);
+            color: var(--google);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+            margin-top: 15px;
+            width: auto;
+        }
+
+        .google-review-btn:hover {
+            background: var(--google);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(219, 68, 55, 0.3);
+        }
+
+        .google-review-btn i {
+            font-size: 1rem;
         }
 
         .copyright {
@@ -1791,7 +1869,7 @@
         </div>
     </section>
 
-    <!-- Footer CORREGIDO -->
+    <!-- Footer MEJORADO -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -1805,20 +1883,29 @@
                     </div>
                     <p>Especialistas en cuidado canino en Curazao. Profesionalismo y amor para tu mascota. ¡Limpieza de oídos y glándulas GRATIS!</p>
                     
+                    <!-- Redes sociales MEJORADAS - Grises y se colorean al hover/select -->
                     <div class="social-links">
-                        <a href="#" class="social-link facebook" onclick="event.preventDefault(); alert('Próximamente');">
+                        <a href="#" class="social-link facebook" onclick="selectSocial(this, 'facebook'); event.preventDefault();">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social-link instagram" onclick="event.preventDefault(); alert('Próximamente');">
+                        <a href="#" class="social-link instagram" onclick="selectSocial(this, 'instagram'); event.preventDefault();">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link tiktok" onclick="event.preventDefault(); alert('Próximamente');">
+                        <a href="#" class="social-link tiktok" onclick="selectSocial(this, 'tiktok'); event.preventDefault();">
                             <i class="fab fa-tiktok"></i>
                         </a>
                         <a href="https://wa.me/59995211694" class="social-link whatsapp" target="_blank">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
+                    
+                    <!-- NUEVO: Botón de califícanos en Google -->
+                    <a href="https://g.page/r/CdGc3CQRuVI-EBM/review" 
+                       target="_blank" 
+                       class="google-review-btn">
+                        <i class="fab fa-google"></i>
+                        Califícanos en Google
+                    </a>
                 </div>
                 
                 <div class="footer-column">
@@ -1951,7 +2038,7 @@
         }
 
         // ==============================
-        // FORMULARIO
+        // FORMULARIO MEJORADO - WhatsApp con formato
         // ==============================
         const contactForm = document.getElementById('contactForm');
         
@@ -1963,18 +2050,62 @@
             const service = document.getElementById('service').value;
             const message = document.getElementById('message').value;
             
-            let whatsappMessage = `Hola Grooming Zoraida,%0A%0A`;
-            whatsappMessage += `*Nombre:* ${name}%0A`;
-            whatsappMessage += `*Teléfono:* ${phone}%0A`;
-            if (service) whatsappMessage += `*Servicio:* ${service}%0A`;
-            whatsappMessage += `*Mensaje:* ${message}`;
+            // Formato mejorado con emojis y estructura clara
+            let whatsappMessage = `🐕 *Hola Grooming Zoraida!* 🐕%0A%0A`;
+            whatsappMessage += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            whatsappMessage += `📋 *DATOS DE CONTACTO*%0A`;
+            whatsappMessage += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            whatsappMessage += `👤 *Nombre:* ${name}%0A`;
+            whatsappMessage += `📞 *WhatsApp:* ${phone}%0A%0A`;
             
-            showNotification('Redirigiendo a WhatsApp...');
+            if (service) {
+                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━%0A`;
+                whatsappMessage += `🐾 *SERVICIO SOLICITADO*%0A`;
+                whatsappMessage += `━━━━━━━━━━━━━━━━━━━━%0A`;
+                whatsappMessage += `📌 *Servicio:* ${service}%0A%0A`;
+            }
+            
+            whatsappMessage += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            whatsappMessage += `💬 *MENSAJE*%0A`;
+            whatsappMessage += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            whatsappMessage += `📝 ${message}%0A%0A`;
+            whatsappMessage += `━━━━━━━━━━━━━━━━━━━━%0A`;
+            whatsappMessage += `✅ ¡Espero tu confirmación!%0A`;
+            whatsappMessage += `⭐ Grooming Zoraida - Estética Canina%0A`;
+            whatsappMessage += `━━━━━━━━━━━━━━━━━━━━`;
+            
+            showNotification('Redirigiendo a WhatsApp con formato mejorado...');
             
             setTimeout(() => {
-                window.open(`https://wa.me/59995211694?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                window.open(`https://wa.me/59995211694?text=${whatsappMessage}`, '_blank');
             }, 1000);
         });
+
+        // ==============================
+        // SELECCIÓN DE REDES SOCIALES
+        // ==============================
+        function selectSocial(element, network) {
+            // Remover la clase 'selected' de todos los botones de redes
+            const allSocialLinks = document.querySelectorAll('.social-link');
+            allSocialLinks.forEach(link => {
+                link.classList.remove('selected');
+            });
+            
+            // Agregar la clase 'selected' al elemento clickeado
+            element.classList.add('selected');
+            
+            // Mostrar mensaje según la red
+            const messages = {
+                'facebook': '📘 Síguenos en Facebook pronto',
+                'instagram': '📸 Estaremos en Instagram muy pronto',
+                'tiktok': '🎵 Nuestro TikTok está en camino',
+                'whatsapp': '📱 Contáctanos por WhatsApp'
+            };
+            
+            if (network !== 'whatsapp') {
+                showNotification(messages[network] || 'Próximamente');
+            }
+        }
 
         // ==============================
         // NOTIFICACIONES
