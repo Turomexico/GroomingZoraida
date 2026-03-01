@@ -242,8 +242,20 @@
 
         section {
             padding: 60px 0;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
-
+        section.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        section:nth-child(even) {
+            transform: translateX(30px);
+        }
+        section.visible:nth-child(even) {
+            transform: translateX(0);
+        }
         @media (min-width: 768px) {
             section {
                 padding: 100px 0;
@@ -595,6 +607,131 @@
         }
 
         /* ========================= */
+        /* NUEVO MÓDULO CONSEJOS - Dra. Zoraida */
+        /* ========================= */
+        .tips {
+            background: linear-gradient(135deg, #f9f7f3, #f0eae1);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .tips-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .tips-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .tip-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tip-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .tip-content {
+            padding: 25px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tip-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .tip-card h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .tip-card h4 {
+            color: var(--secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .tip-text {
+            color: var(--gray-dark);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .tip-footer {
+            border-top: 1px solid var(--gray-light);
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vet-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .vet-info {
+            font-size: 0.85rem;
+        }
+
+        .vet-name {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .vet-title {
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+
+        /* ========================= */
         /* HEADER */
         /* ========================= */
         header {
@@ -755,19 +892,16 @@
         }
 
         /* ========================= */
-        /* HERO */
+        /* HERO - Imagen en tamaño real sin pérdida de calidad */
         /* ========================= */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), 
-                        url('https://i.ibb.co/wZLDQPLc/53cace74-7f25-44bc-a46d-efffbe4c5a0b.jpg');
-            background-size: cover;
-            background-position: center;
-            color: var(--white);
+            position: relative;
             min-height: 85vh;
             display: flex;
             align-items: center;
             margin-top: 60px;
             padding: 40px 0;
+            overflow: hidden;
         }
 
         @media (min-width: 768px) {
@@ -776,9 +910,41 @@
             }
         }
 
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6));
+            z-index: -1;
+        }
+
         .hero-content {
             max-width: 800px;
             text-align: center;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
         }
 
         @media (min-width: 768px) {
@@ -1417,6 +1583,7 @@
                     <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
                     <li><a href="#servicios" class="nav-link">Servicios</a></li>
                     <li><a href="#lealtad" class="nav-link">Lealtad</a></li>
+                    <li><a href="#consejos" class="nav-link">Consejos</a></li>
                     <li><a href="#ubicacion" class="nav-link">Ubicación</a></li>
                     <li><a href="#contacto" class="nav-link">Contacto</a></li>
                 </ul>
@@ -1424,8 +1591,12 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Imagen en tamaño real sin pérdida -->
     <section class="hero" id="inicio">
+        <div class="hero-background">
+            <img src="https://i.ibb.co/wZLDQPLc/53cace74-7f25-44bc-a46d-efffbe4c5a0b.jpg" alt="Fondo de perrito feliz">
+        </div>
+        <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
                 <h1>Estética Canina Profesional en Curazao</h1>
@@ -1751,6 +1922,163 @@
         </div>
     </section>
 
+    <!-- NUEVO MÓDULO CONSEJOS - Dra. Zoraida Colmenares Perez con 32 años de experiencia -->
+    <section class="tips" id="consejos">
+        <div class="container">
+            <div class="text-center">
+                <h2>Consejos de Nuestra Veterinaria</h2>
+                <p class="section-subtitle">Con más de 30 años de experiencia profesional, la Dra. Zoraida Colmenares Perez comparte su sabiduría para el cuidado de tu mejor amigo</p>
+            </div>
+            
+            <div class="tips-grid">
+                <!-- Consejo 1 -->
+                <div class="tip-card">
+                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cuidado dental" class="tip-image">
+                    <div class="tip-content">
+                        <div class="tip-icon">
+                            <i class="fas fa-tooth"></i>
+                        </div>
+                        <h3>Salud Dental Canina</h3>
+                        <h4>La base de una vida saludable</h4>
+                        <div class="tip-text">
+                            <p>El 80% de los perros mayores de 3 años tiene enfermedad periodontal. Cepilla los dientes de tu perro al menos 3 veces por semana con pasta dental específica para perros. Los huesos recreativos y juguetes dentales ayudan a prevenir el sarro. La halitosis (mal aliento) es el primer signo de problemas dentales.</p>
+                        </div>
+                        <div class="tip-footer">
+                            <div class="vet-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="vet-info">
+                                <div class="vet-name">Zoraida Colmenares Perez</div>
+                                <div class="vet-title">Veterinaria - 32 años exp.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Consejo 2 -->
+                <div class="tip-card">
+                    <img src="https://images.unsplash.com/photo-1583511655826-05700d52f4d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Alimentación" class="tip-image">
+                    <div class="tip-content">
+                        <div class="tip-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Nutrición Balanceada</h3>
+                        <h4>Eres lo que comes, tu perro también</h4>
+                        <div class="tip-text">
+                            <p>La alimentación debe basarse en proteína de calidad como primer ingrediente. Evita darle comida humana, especialmente chocolate, uvas, cebolla y ajo (tóxicos). Los perros mayores necesitan menos calorías y más fibra. Consulta siempre antes de cambiar su dieta. El sobrepeso reduce su esperanza de vida hasta 2 años.</p>
+                        </div>
+                        <div class="tip-footer">
+                            <div class="vet-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="vet-info">
+                                <div class="vet-name">Zoraida Colmenares Perez</div>
+                                <div class="vet-title">Veterinaria - 32 años exp.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Consejo 3 -->
+                <div class="tip-card">
+                    <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ejercicio" class="tip-image">
+                    <div class="tip-content">
+                        <div class="tip-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <h3>Ejercicio Diario</h3>
+                        <h4>Mente sana en cuerpo sano</h4>
+                        <div class="tip-text">
+                            <p>Cada raza necesita diferente intensidad de ejercicio. Los perros necesitan al menos 30-60 minutos diarios de actividad física. El ejercicio previene obesidad, problemas articulares y conductas destructivas por aburrimiento. Varía las rutinas: paseos, juegos de olfato, y socialización controlada.</p>
+                        </div>
+                        <div class="tip-footer">
+                            <div class="vet-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="vet-info">
+                                <div class="vet-name">Zoraida Colmenares Perez</div>
+                                <div class="vet-title">Veterinaria - 32 años exp.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Consejo 4 -->
+                <div class="tip-card">
+                    <!-- Reemplazo de la imagen de calendario de vacunación por una de perro con juguete -->
+                    <img src="https://images.unsplash.com/photo-1553882809-a4f57e59501d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Perro feliz con juguete" class="tip-image">
+                    <div class="tip-content">
+                        <div class="tip-icon">
+                            <i class="fas fa-syringe"></i>
+                        </div>
+                        <h3>Calendario de Vacunación</h3>
+                        <h4>Prevenir es mejor que curar</h4>
+                        <div class="tip-text">
+                            <p>Las vacunas básicas: moquillo, parvovirus, hepatitis y rabia son obligatorias. Los cachorros necesitan refuerzos cada 3-4 semanas hasta los 4 meses. Adultos: refuerzo anual. La leptospirosis es recomendable en zonas tropicales como Curazao. Mantén un registro y no atrases las dosis.</p>
+                        </div>
+                        <div class="tip-footer">
+                            <div class="vet-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="vet-info">
+                                <div class="vet-name">Zoraida Colmenares Perez</div>
+                                <div class="vet-title">Veterinaria - 32 años exp.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Consejo 5 -->
+                <div class="tip-card">
+                    <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pulgas y garrapatas" class="tip-image">
+                    <div class="tip-content">
+                        <div class="tip-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <h3>Control de Parásitos</h3>
+                        <h4>Protección todo el año</h4>
+                        <div class="tip-text">
+                            <p>En climas cálidos como Curazao, pulgas y garrapatas son un problema constante. Usa antiparasitarios durante todo el año, no solo en verano. Los collares, pipetas y pastillas son efectivos si se usan correctamente. Revisa a tu perro después de paseos por zonas verdes. La prevención evita enfermedades como ehrlichiosis.</p>
+                        </div>
+                        <div class="tip-footer">
+                            <div class="vet-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="vet-info">
+                                <div class="vet-name">Zoraida Colmenares Perez</div>
+                                <div class="vet-title">Veterinaria - 32 años exp.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Consejo 6 -->
+                <div class="tip-card">
+                    <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Estrés canino" class="tip-image">
+                    <div class="tip-content">
+                        <div class="tip-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Bienestar Emocional</h3>
+                        <h4>Ellos también se estresan</h4>
+                        <div class="tip-text">
+                            <p>Señales de estrés: jadeo excesivo, orejas hacia atrás, cola entre patas, lamido compulsivo. Crea una rutina estable, dale su espacio seguro y usa refuerzo positivo. La música clásica y los masajes relajan. Si notas cambios de comportamiento, consulta. La ansiedad por separación es común y tratable.</p>
+                        </div>
+                        <div class="tip-footer">
+                            <div class="vet-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="vet-info">
+                                <div class="vet-name">Zoraida Colmenares Perez</div>
+                                <div class="vet-title">Veterinaria - 32 años exp.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Location Section -->
     <section class="location" id="ubicacion">
         <div class="container">
@@ -1915,6 +2243,7 @@
                         <li><a href="#nosotros">Nosotros</a></li>
                         <li><a href="#servicios">Servicios</a></li>
                         <li><a href="#lealtad">Programa Lealtad</a></li>
+                        <li><a href="#consejos">Consejos</a></li>
                         <li><a href="#ubicacion">Ubicación</a></li>
                         <li><a href="#contacto">Contacto</a></li>
                     </ul>
@@ -2150,6 +2479,24 @@
                 }, 400);
             }, 2500);
         }
+
+        // ==============================
+        // ANIMACIÓN DE ENTRADA PARA LAS SECCIONES
+        // ==============================
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
     </script>
 </body>
 </html>
